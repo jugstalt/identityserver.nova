@@ -1,0 +1,12 @@
+﻿@model IEditClientModel
+
+    <ul class="nav nav-pills nav-stacked">
+        <li class="@EditClientNavPages.IndexNavClass(ViewContext)">
+            <a asp-page="./Index"
+               asp-route-id="@Model?.CurrentClient?.ClientId">Name</a>
+        </li>
+        <li class="@EditClientNavPages.ScopesNavClass(ViewContext)">
+            <a asp-page="./Scopes"
+               asp-route-id="@Model?.CurrentClient?.ClientId">Scopes</a>
+        </li>
+    </ul>

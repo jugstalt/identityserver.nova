@@ -1,0 +1,22 @@
+﻿@page
+@model IdentityServer.Areas.Admin.Pages.Resources.ClientsModel
+@{
+    ViewData["Title"] = "Clients";
+    ViewData["ActivePage"] = "Clients";
+}
+
+<ul class="nav nav-pills nav-stacked">
+
+@if (Model?.Input?.Clients != null)
+{
+    @foreach (var client in Model.Input.Clients)
+    {
+        <li>
+            <a asp-page="./EditClient/Index"
+               asp-route-id="@client.ClientId">
+                @($"{ client.ClientId }: { client.ClientName }")
+            </a>
+        </li>
+    }
+}
+ </ul>

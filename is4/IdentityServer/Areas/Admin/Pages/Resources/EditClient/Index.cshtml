@@ -1,0 +1,33 @@
+﻿@page
+@model IdentityServer.Areas.Admin.Pages.Resources.EditClient.IndexModel
+@{
+    ViewData["Title"] = "Name and Description";
+    ViewData["ActivePage"] = EditClientNavPages.Index;
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+        <form id="-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Input.ClientId" />
+            <div class="form-group">
+                <label>Client Id</label>
+                <input value="@Model.Input.ClientId" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ClientName"></label>
+                <input asp-for="Input.ClientName" class="form-control" />
+                <span asp-validation-for="Input.ClientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ClientDescription"></label>
+                <textarea asp-for="Input.ClientDescription" class="form-control" rows="5">
+
+                </textarea>
+                <span asp-validation-for="Input.ClientDescription" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-default">Save</button>
+        </form>
+    </div>
+</div>

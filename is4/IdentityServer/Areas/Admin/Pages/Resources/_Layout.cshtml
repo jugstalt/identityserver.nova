@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin IdentityServer</h2>
+<div>
+    <h4>Add or modify clients and resources</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_ResourcesNav" />
+        </div>
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+    
+</div>
+
