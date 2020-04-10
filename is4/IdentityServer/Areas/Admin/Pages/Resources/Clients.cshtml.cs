@@ -21,21 +21,42 @@ namespace IdentityServer.Areas.Admin.Pages.Resources
         {
             if (_clientDb != null)
             {
-                Input = new AllClientsModel()
-                {
-                    Clients = await _clientDb.GetAllClients()
-                };
+                this.Clients = await _clientDb.GetAllClients();
+
+                Input = new NewClient();
             }
 
             return Page();
         }
 
-        [BindProperty]
-        public AllClientsModel Input { get; set; }
-
-        public class AllClientsModel
+        async public Task<IActionResult> OnPostAsync()
         {
-            public IEnumerable<Client> Clients { get; set; }
+            // is valid client id
+            string clientId = Input.ClientId.Trim().ToLower();
+
+            if (_clientDb != null)
+            {
+                var client = new Client()
+                {
+                    ClientId = clientId,
+                    ClientName = Input.ClientName.Trim()
+                };
+
+                await _clientDb.AddClientAsync(client);
+            }
+
+            return RedirectToPage("EditClient/Index", new { id = clientId });
+        }
+
+        public IEnumerable<Client> Clients { get; set; }
+
+        [BindProperty]
+        public NewClient Input { get; set; }
+
+        public class NewClient
+        {
+            public string ClientId { get; set; }
+            public string ClientName { get; set; }
         }
     }
 }

@@ -10,9 +10,5 @@ namespace IdentityServer.Legacy.DbContext
     {
         Task<ApiResource> FindApiResourceAsync(string name);
         Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames);
-
-        Task AddApiResourceAsync(ApiResource apiResource);
-        Task UpdateApiResourceAsync(ApiResource apiResource);
-        Task RemoveApiResourceAsync(ApiResource apiResource);
     }
 }

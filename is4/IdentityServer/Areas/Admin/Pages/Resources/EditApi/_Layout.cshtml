@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@model IEditApiResourceModel
+
+<h2>Admin IdentityServer</h2>
+<div>
+    <h4>Modify ApiResource: @Model?.CurrentApiResource?.Name</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_EditApiResourceNav" />
+        </div>
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+
+</div>
+

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer.Legacy.DbContext;
-using IdentityServer4.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IdentityServer.Areas.Admin.Pages.Resources.EditClient
 {
-    public class IndexModel : EditClientModel
+    public class DeleteClientModel : EditClientModel
     {
-        public IndexModel(IClientDbContext clientDbContext)
+        public DeleteClientModel(IClientDbContext clientDbContext)
              : base(clientDbContext)
         {
         }
@@ -22,9 +21,7 @@ namespace IdentityServer.Areas.Admin.Pages.Resources.EditClient
 
             Input = new InputModel()
             {
-                ClientId = CurrentClient.ClientId,
-                ClientName = CurrentClient.ClientName,
-                ClientDescription = CurrentClient.Description
+                ClientId = CurrentClient.ClientId
             };
 
             return Page();
@@ -34,12 +31,13 @@ namespace IdentityServer.Areas.Admin.Pages.Resources.EditClient
         {
             await LoadCurrentClientAsync(Input.ClientId);
 
-            CurrentClient.ClientName = Input.ClientName;
-            CurrentClient.Description = Input.ClientDescription;
+            if (Input.ConfirmClientId == CurrentClient.ClientId)
+            {
+                await _clientDb.RemoveClientAsync(this.CurrentClient);
+                return RedirectToPage("../Clients");
+            }
 
-            await _clientDb.UpdateClientAsync(CurrentClient);
-
-            return Page();
+            return RedirectToPage(new { id = this.CurrentClient.ClientId });
         }
 
         [BindProperty]
@@ -48,8 +46,7 @@ namespace IdentityServer.Areas.Admin.Pages.Resources.EditClient
         public class InputModel
         {
             public string ClientId { get; set; }
-            public string ClientName { get; set; }
-            public string ClientDescription { get; set; }
-        } 
+            public string ConfirmClientId { get; set; }
+        }
     }
 }

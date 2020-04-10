@@ -1,0 +1,36 @@
+﻿@model IEditApiResourceModel
+
+    <ul class="nav nav-pills nav-stacked">
+        <li class="">
+            <a asp-page="../Clients"
+               asp-route-id="@Model?.CurrentApiResource?.Name">..</a>
+        </li>
+        <li class="@EditApiResourceNavPages.IndexNavClass(ViewContext)">
+            <a asp-page="./Index"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Name</a>
+        </li>
+        <li class="@EditApiResourceNavPages.SecretsNavClass(ViewContext)">
+            <a asp-page="./Secrets"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Client Secrets</a>
+        </li>
+        <li class="@EditApiResourceNavPages.GrantsNavClass(ViewContext)">
+            <a asp-page="./Grants"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Allowed Grants</a>
+        </li>
+        <li class="@EditApiResourceNavPages.ScopesNavClass(ViewContext)">
+            <a asp-page="./Scopes"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Allowed Scopes</a>
+        </li>
+        <li class="@EditApiResourceNavPages.OptionsNavClass(ViewContext)">
+            <a asp-page="./Options"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Advanced Options</a>
+        </li>
+        <li class="@EditApiResourceNavPages.PropertiesNavClass(ViewContext)">
+            <a asp-page="./Properties"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Advanced Properties</a>
+        </li>
+        <li class="@EditApiResourceNavPages.DeleteClientNavClass(ViewContext)">
+            <a asp-page="./DeleteClient"
+               asp-route-id="@Model?.CurrentApiResource?.Name">Delete</a>
+        </li>
+    </ul>

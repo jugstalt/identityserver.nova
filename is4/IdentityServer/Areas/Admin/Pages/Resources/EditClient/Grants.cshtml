@@ -1,0 +1,35 @@
+﻿@page
+@model IdentityServer.Areas.Admin.Pages.Resources.EditClient.GrantsModel
+@{
+    ViewData["Title"] = "Allowed Grants";
+    ViewData["ActivePage"] = EditClientNavPages.Grants;
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+
+        <ul class="nav nav-pills nav-stacked">
+            @foreach (var staticField in typeof(OidcConstants.GrantTypes).GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                var grantName = staticField.Name;
+                var grantValue = staticField.GetValue(null);
+                var hasGrant = Model.CurrentClient.AllowedGrantTypes != null && Model.CurrentClient.AllowedGrantTypes.Contains(grantValue);
+
+                <li style="border-bottom:1px solid #eee">
+                    <a asp-page="./SetGrant"
+                       asp-route-id="@Model.CurrentClient.ClientId"
+                       asp-route-grant="@grantValue"
+                       asp-route-remove="@hasGrant">
+                        <div style="width:32px;height:32px;float:left"
+                             class="@(hasGrant ? "glyphicon glyphicon-ok text-success" : "")">
+
+                        </div>
+                        <div>@(grantName)</div>
+                        <div style="color:#aaa;font-size:.85em">@(grantValue)</div>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

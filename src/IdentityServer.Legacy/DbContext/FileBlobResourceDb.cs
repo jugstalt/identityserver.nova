@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Legacy.DbContext
 {
-    public class FileBlobResourceDb : IResourceDbContext
+    public class FileBlobResourceDb : IResourceDbContextModify
     {
         private string _rootPath = null;
         private ICryptoService _cryptoService = null;
@@ -118,6 +118,24 @@ namespace IdentityServer.Legacy.DbContext
             }
 
             await AddApiResourceAsync(apiResource);
+        }
+
+        async public Task<IEnumerable<ApiResource>> GetAllApiResources()
+        {
+            List<ApiResource> apiResources = new List<ApiResource>();
+
+            foreach (var fi in new DirectoryInfo(_rootPath).GetFiles("*.api"))
+            {
+                using (var reader = File.OpenText(fi.FullName))
+                {
+                    var fileText = await reader.ReadToEndAsync();
+                    fileText = _cryptoService.DecryptText(fileText);
+
+                    apiResources.Add(JsonConvert.DeserializeObject<ApiResource>(fileText));
+                }
+            }
+
+            return apiResources;
         }
 
         #endregion

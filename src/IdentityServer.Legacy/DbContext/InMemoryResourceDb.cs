@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Legacy.DbContext
 {
-    public class InMemoryResourceDb : IResourceDbContext
+    public class InMemoryResourceDb : IResourceDbContextModify
     {
         private static ConcurrentDictionary<string, ApiResource> _apiResources = null;
 
@@ -86,6 +86,11 @@ namespace IdentityServer.Legacy.DbContext
             }
 
             return Task.FromResult(0);
+        }
+
+        public Task<IEnumerable<ApiResource>> GetAllApiResources()
+        {
+            return Task.FromResult<IEnumerable<ApiResource>>(_apiResources.Values.ToArray());
         }
 
         #endregion
